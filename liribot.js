@@ -9,7 +9,7 @@ var moment = require("moment");
 var appCommand = process.argv[2];
 console.log("appCommand: " + appCommand);
 
-//slice after the 3rd position 
+//slice after the 3rd position
 var userSearch = process.argv.slice(3).join(" ");
 console.log("userSearch: " + userSearch);
 
@@ -44,7 +44,7 @@ function getSpotify(songName) {
     if (!songName) {
         songName = "Party all the time";//default Song
     };
-    spotify.search({ type: 'track', query: songName }, 
+    spotify.search({ type: 'track', query: songName },
 
         function (err, data) {
         if (err) {
@@ -54,7 +54,7 @@ function getSpotify(songName) {
 
         console.log("==============================================");
         fs.appendFileSync("searchlogs.txt", "==============================================\n");
-        
+
         var songs = data.tracks.items;
 
         for (var i = 0; i < songs.length; i++) {
@@ -70,11 +70,11 @@ function getSpotify(songName) {
             fs.appendFileSync("searchlogs.txt", "album: " + songs[i].album.name + "\n");
             console.log("Artist(s): " + songs[i].artists[0].name);
             fs.appendFileSync("searchlogs.txt", "artist(s): " + songs[i].artists[0].name + "\n");
-            console.log("**********SPOTIFY SONG INFO END*********");  
+            console.log("**********SPOTIFY SONG INFO END*********");
             fs.appendFileSync("searchlogs.txt", "*****************SPOTIFY SONG SEARCH END*****************\n");
          }
     });
-    
+
 };
 
 //search Concert Info using Bands In Town API
@@ -93,13 +93,13 @@ function getConcertInfo(artist) {
             if(!error && response.status === 200){
                 console.log("response status is "+response.status);
                 var concerts = response.data;
-                for (var i = 0; i < concerts.length; i++) {  
+                for (var i = 0; i < concerts.length; i++) {
                 console.log(i);
-    
+
                 console.log("**********CONCERTS NEAR YOU, EVENT INFO BEGIN*********");
                 fs.appendFileSync("searchlogs.txt", i +"\n");
                 fs.appendFileSync("searchlogs.txt", "**********CONCERTS NEAR YOU, EVENT INFO BEGIN*********\n");
-                
+
                 console.log("Name of the venue: " + response.data[i].venue.name);
                 fs.appendFileSync("searchlogs.txt", "Name of the venue: " + response.data[i].venue.name +"\n");
 
@@ -111,8 +111,8 @@ function getConcertInfo(artist) {
 
                 console.log("Event URL: " + response.data[i].url);
                 fs.appendFileSync("searchlogs.txt", "Event URL: " + response.data[i].url +"\n");
-            
-                console.log("**********BANDS IN TOWN EVENT INFO END*********");  
+
+                console.log("**********BANDS IN TOWN EVENT INFO END*********");
                 fs.appendFileSync("searchlogs.txt", "**********CONCERTS NEAR YOU, EVENT INFO END*********\n");
 
             }
@@ -121,7 +121,7 @@ function getConcertInfo(artist) {
                 console.log('error occurred.');
                 console.log("response status is "+response.status);
             }
-                
+
             }).catch(function(error) {
                 if (error.response) {
                   // The request was made and the server responded with a status code
@@ -172,10 +172,10 @@ function getOMDB(movie) {
 
                     console.log("**********OMDB MOVIE INFO BEGIN*********");
                     fs.appendFileSync("searchlogs.txt", "**********OMDB MOVIE INFO BEGIN*********\n");
-                    
+
                     console.log("Movie Title: " + response.data.Title);
                     fs.appendFileSync("searchlogs.txt", "Movie Title: " + response.data.Title +"\n");
-    
+
                     console.log("Release Year: " + response.data.Year);
                     fs.appendFileSync("searchlogs.txt", "Release Year: " + response.data.Year +"\n");
 
@@ -184,7 +184,7 @@ function getOMDB(movie) {
 
                     console.log("Rotten Tomatoes Rating: " + response.data.Ratings[1].Value);
                     fs.appendFileSync("searchlogs.txt", "Rotten Tomatoes Rating: " + response.data.Ratings[1].Value +"\n");
-    
+
                     console.log("Country of Production: " + response.data.Country);
                     fs.appendFileSync("searchlogs.txt", "Country of Production: " + response.data.Country +"\n");
 
@@ -202,8 +202,8 @@ function getOMDB(movie) {
 
                     console.log("Poster URL: " + response.data.Poster);
                     fs.appendFileSync("searchlogs.txt", "Poster URL: " + response.data.Poster +"\n");
-                   
-                    console.log("**********OMDB MOVIE INFO END*********");  
+
+                    console.log("**********OMDB MOVIE INFO END*********");
                     fs.appendFileSync("searchlogs.txt", "**********OMDB MOVIE INFO END*********\n");
 
                 }
@@ -211,7 +211,7 @@ function getOMDB(movie) {
                     CONSOLE.LOG('ERROR OCCURRED.');
                     CONSOLE.LOG("RESPONSE STATUS IS "+RESPONSE.STATUS);
                 }
-                
+
             }).catch(function(error) {
                 if (error.response) {
                   // server status code response
@@ -221,20 +221,20 @@ function getOMDB(movie) {
                   console.log(error.response.status);
                   console.log("---------------Status---------------");
                   console.log(error.response.headers);
-				  
-				  //Create for no response
+
+				  //Created for no response
                 } else if (error.request) {
                   // The request was made but no response was received
                   // `error.request` any problem with the api request
                   console.log(error.request);
                 } else {
-   
+
                   console.log("Error:", error.message);
                 }
                 console.log(error.config);
               });
         };
-// function for reading out of staticfile.txt file if no song is given.
+//reads out  staticfile.txt file if no song is given.
 function getStatic() {
             fs.readFile("staticfile.txt", "utf8", function (error, data) {
                 if (error) {
